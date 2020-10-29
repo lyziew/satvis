@@ -2,8 +2,8 @@
 import * as Cesium from "cesium/Cesium";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { DeviceDetect } from "./util/DeviceDetect";
-import { SatelliteManager } from "./SatelliteManager";
+import {DeviceDetect} from "./util/DeviceDetect";
+import {SatelliteManager} from "./SatelliteManager";
 
 dayjs.extend(utc);
 
@@ -37,7 +37,7 @@ export class CesiumController {
     this.viewer.clock.shouldAnimate = true;
     this.viewer.scene.globe.enableLighting = true;
     this.viewer.scene.highDynamicRange = true;
-    this.viewer.scene.maximumRenderTimeChange = 1/30;
+    this.viewer.scene.maximumRenderTimeChange = 1 / 30;
     this.viewer.scene.requestRenderMode = true;
     //this.viewer.scene.debugShowFramesPerSecond = true;
 
@@ -49,7 +49,7 @@ export class CesiumController {
     this.terrainProviders = ["None", "Maptiler"];
     this.sceneModes = ["3D", "2D", "Columbus"];
     this.cameraModes = ["Fixed", "Inertial"];
-    this.groundStationPicker = { enabled: false };
+    this.groundStationPicker = {enabled: false};
 
     this.createInputHandler();
     this.styleInfoBox();
@@ -64,21 +64,23 @@ export class CesiumController {
 
     // Fix Cesium logo in minimal ui mode
     if (this.minimalUI) {
-      setTimeout(() => { this.fixLogo(); }, 2500);
+      setTimeout(() => {
+        this.fixLogo();
+      }, 2500);
     }
   }
 
   set sceneMode(sceneMode) {
-    switch(sceneMode) {
-    case "3D":
-      this.viewer.scene.morphTo3D();
-      break;
-    case "2D":
-      this.viewer.scene.morphTo2D();
-      break;
-    case "Columbus":
-      this.viewer.scene.morphToColumbusView();
-      break;
+    switch (sceneMode) {
+      case "3D":
+        this.viewer.scene.morphTo3D();
+        break;
+      case "2D":
+        this.viewer.scene.morphTo2D();
+        break;
+      case "Columbus":
+        this.viewer.scene.morphToColumbusView();
+        break;
     }
   }
 
@@ -113,81 +115,81 @@ export class CesiumController {
   createImageryProvider(imageryProviderName = "OfflineHighres") {
     let provider;
     let alpha = 1;
-    switch(imageryProviderName) {
-    case "Offline":
-      provider = new Cesium.TileMapServiceImageryProvider({
-        url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
-      });
-      break;
-    case "OfflineHighres":
-      provider = new Cesium.TileMapServiceImageryProvider({
-        url : "data/cesium-assets/imagery/NaturalEarthII",
-        maximumLevel : 5,
-        credit : "Imagery courtesy Natural Earth"
-      });
-      break;
-    case "ArcGis":
-      provider = new Cesium.ArcGisMapServerImageryProvider({
-        url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
-      });
-      break;
-    case "OSM":
-      provider = new Cesium.OpenStreetMapImageryProvider({
-        url : "https://a.tile.openstreetmap.org/"
-      });
-      break;
-    case "Tiles":
-      provider = new Cesium.TileCoordinatesImageryProvider();
-      break;
-    case "BlackMarble":
-      provider = new Cesium.WebMapServiceImageryProvider({
-        url: "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
-        layers: "VIIRS_Black_Marble",
-        style: "default",
-        tileMatrixSetID: "250m",
-        format: "image/png",
-        tileWidth: 512,
-        tileHeight: 512,
-        credit: "NASA Global Imagery Browse Services for EOSDIS"
-      });
-      break;
-    case "GOES-IR":
-      provider = new Cesium.WebMapServiceImageryProvider({
-        url : "https://mesonet.agron.iastate.edu/cgi-bin/wms/goes/conus_ir.cgi?",
-        layers : "goes_conus_ir",
-        credit : "Infrared data courtesy Iowa Environmental Mesonet",
-        parameters : {
-          transparent : "true",
-          format : "image/png"
-        }
-      });
-      alpha = 0.5;
-      break;
-    case "Nextrad":
-      provider = new Cesium.WebMapServiceImageryProvider({
-        url : "https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi?",
-        layers : "nexrad-n0r",
-        credit : "US Radar data courtesy Iowa Environmental Mesonet",
-        parameters : {
-          transparent : "true",
-          format : "image/png"
-        }
-      });
-      alpha = 0.5;
-      break;
-    case "Meteocool":
-      provider = new Cesium.UrlTemplateImageryProvider({
-        url : "https://{s}.tileserver.unimplemented.org/data/raa01-wx_10000-latest-dwd-wgs84_transformed/{z}/{x}/{y}.png",
-        rectangle: Cesium.Rectangle.fromDegrees(2.8125, 45, 19.6875, 56.25),
-        minimumLevel: 6,
-        maximumLevel: 10,
-        credit : "DE Radar data courtesy of meteocool.com",
-        subdomains: "ab"
-      });
-      alpha = 0.5;
-      break;
+    switch (imageryProviderName) {
+      case "Offline":
+        provider = new Cesium.TileMapServiceImageryProvider({
+          url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
+        });
+        break;
+      case "OfflineHighres":
+        provider = new Cesium.TileMapServiceImageryProvider({
+          url: "data/cesium-assets/imagery/NaturalEarthII",
+          maximumLevel: 5,
+          credit: "Imagery courtesy Natural Earth"
+        });
+        break;
+      case "ArcGis":
+        provider = new Cesium.ArcGisMapServerImageryProvider({
+          url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+        });
+        break;
+      case "OSM":
+        provider = new Cesium.OpenStreetMapImageryProvider({
+          url: "https://a.tile.openstreetmap.org/"
+        });
+        break;
+      case "Tiles":
+        provider = new Cesium.TileCoordinatesImageryProvider();
+        break;
+      case "BlackMarble":
+        provider = new Cesium.WebMapServiceImageryProvider({
+          url: "https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi",
+          layers: "VIIRS_Black_Marble",
+          style: "default",
+          tileMatrixSetID: "250m",
+          format: "image/png",
+          tileWidth: 512,
+          tileHeight: 512,
+          credit: "NASA Global Imagery Browse Services for EOSDIS"
+        });
+        break;
+      case "GOES-IR":
+        provider = new Cesium.WebMapServiceImageryProvider({
+          url: "https://mesonet.agron.iastate.edu/cgi-bin/wms/goes/conus_ir.cgi?",
+          layers: "goes_conus_ir",
+          credit: "Infrared data courtesy Iowa Environmental Mesonet",
+          parameters: {
+            transparent: "true",
+            format: "image/png"
+          }
+        });
+        alpha = 0.5;
+        break;
+      case "Nextrad":
+        provider = new Cesium.WebMapServiceImageryProvider({
+          url: "https://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi?",
+          layers: "nexrad-n0r",
+          credit: "US Radar data courtesy Iowa Environmental Mesonet",
+          parameters: {
+            transparent: "true",
+            format: "image/png"
+          }
+        });
+        alpha = 0.5;
+        break;
+      case "Meteocool":
+        provider = new Cesium.UrlTemplateImageryProvider({
+          url: "https://{s}.tileserver.unimplemented.org/data/raa01-wx_10000-latest-dwd-wgs84_transformed/{z}/{x}/{y}.png",
+          rectangle: Cesium.Rectangle.fromDegrees(2.8125, 45, 19.6875, 56.25),
+          minimumLevel: 6,
+          maximumLevel: 10,
+          credit: "DE Radar data courtesy of meteocool.com",
+          subdomains: "ab"
+        });
+        alpha = 0.5;
+        break;
     }
-    return { provider, alpha };
+    return {provider, alpha};
   }
 
   set terrainProvider(terrainProviderName) {
@@ -195,46 +197,46 @@ export class CesiumController {
       return;
     }
 
-    switch(terrainProviderName) {
-    case "None":
-      this.viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
-      break;
-    case "Maptiler":
-      this.viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: "https://api.maptiler.com/tiles/terrain-quantized-mesh/?key=8urAyLJIrn6TeDtH0Ubh",
-        credit: "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
-        requestVertexNormals: true,
-      });
-      break;
-    case "ArcGIS":
-      this.viewer.terrainProvider = new Cesium.ArcGISTiledElevationTerrainProvider({
-        url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
-      });
-      break;
+    switch (terrainProviderName) {
+      case "None":
+        this.viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider();
+        break;
+      case "Maptiler":
+        this.viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+          url: "https://api.maptiler.com/tiles/terrain-quantized-mesh/?key=8urAyLJIrn6TeDtH0Ubh",
+          credit: "<a href=\"https://www.maptiler.com/copyright/\" target=\"_blank\">© MapTiler</a> <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">© OpenStreetMap contributors</a>",
+          requestVertexNormals: true,
+        });
+        break;
+      case "ArcGIS":
+        this.viewer.terrainProvider = new Cesium.ArcGISTiledElevationTerrainProvider({
+          url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"
+        });
+        break;
     }
   }
 
   jumpTo(location) {
-    switch(location) {
-    case "Everest":
-      this.viewer.camera.lookAt(new Cesium.Cartesian3(300770.50872389384, 5634912.131394585, 2978152.2865545116), new Cesium.Cartesian3(6344.974098678562, -793.3419798081741, 2499.9508860763162));
-      this.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
-      break;
-    case "HalfDome":
-      this.viewer.camera.lookAt(new Cesium.Cartesian3(-2489625.0836225147, -4393941.44443024, 3882535.9454173897), new Cesium.Cartesian3(-6857.40902037546, 412.3284835694358, 2147.5545426812023));
-      this.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
-      break;
+    switch (location) {
+      case "Everest":
+        this.viewer.camera.lookAt(new Cesium.Cartesian3(300770.50872389384, 5634912.131394585, 2978152.2865545116), new Cesium.Cartesian3(6344.974098678562, -793.3419798081741, 2499.9508860763162));
+        this.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        break;
+      case "HalfDome":
+        this.viewer.camera.lookAt(new Cesium.Cartesian3(-2489625.0836225147, -4393941.44443024, 3882535.9454173897), new Cesium.Cartesian3(-6857.40902037546, 412.3284835694358, 2147.5545426812023));
+        this.viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+        break;
     }
   }
 
   set cameraMode(cameraMode) {
-    switch(cameraMode) {
-    case "Inertial":
-      this.viewer.scene.postUpdate.addEventListener(this.cameraTrackEci);
-      break;
-    case "Fixed":
-      this.viewer.scene.postUpdate.removeEventListener(this.cameraTrackEci);
-      break;
+    switch (cameraMode) {
+      case "Inertial":
+        this.viewer.scene.postUpdate.addEventListener(this.cameraTrackEci);
+        break;
+      case "Fixed":
+        this.viewer.scene.postUpdate.removeEventListener(this.cameraTrackEci);
+        break;
     }
   }
 

@@ -214,7 +214,7 @@ export class SatelliteProperties {
     if (!this.groundStationAvailable) {
       Toast.open({
         message: "Ground station required to notify for passes",
-        type: "is-warning",
+        type: "is-danger",
         position: "is-bottom",
         duration: 4000,
       });
